@@ -13,13 +13,13 @@ namespace ServicioFacturacionApi.Controllers
     {
         #region Servicios REST
         // GET: api/Cliente
-        public List<vClienteEntidad> Get()
+        public List<ClienteEntidad> Get()
         {
             return obtenerLista();
         }
 
         // GET: api/Cliente/5
-        public vClienteEntidad Get(string id)
+        public ClienteEntidad Get(string id)
         {
             return obtenerCliente(id);
         }
@@ -39,7 +39,7 @@ namespace ServicioFacturacionApi.Controllers
         [HttpGet]
         [Route("api/Cliente/Paginacion/{pagina}/{cantidad}/{cedula?}/{nombre?}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public List<vClienteEntidad> GetClientesFiltro(int pagina, int cantidad, string cedula = "", string nombre = "")
+        public List<ClienteEntidad> GetClientesFiltro(int pagina, int cantidad, string cedula = "", string nombre = "")
         {
             if (cedula == null)
             {
@@ -49,13 +49,13 @@ namespace ServicioFacturacionApi.Controllers
         }
 
         // POST: api/Cliente
-        public bool Post([FromBody] vClienteEntidad cliente)
+        public bool Post([FromBody] ClienteEntidad cliente)
         {
             return insertarCliente(cliente);
         }
 
         // PUT: api/Cliente/
-        public bool Put(vClienteEntidad cliente)
+        public bool Put(ClienteEntidad cliente)
         {
             return actualizarCliente(cliente);
         }
@@ -67,7 +67,7 @@ namespace ServicioFacturacionApi.Controllers
         }
 
         // DELETE: api/Cliente/
-        public bool Delete(vClienteEntidad cliente)
+        public bool Delete(ClienteEntidad cliente)
         {
             return borrarCliente(cliente);
         }
@@ -75,23 +75,23 @@ namespace ServicioFacturacionApi.Controllers
         #endregion
 
         #region Metodos Base de Datos
-        private List<vClienteEntidad> obtenerLista()
+        private List<ClienteEntidad> obtenerLista()
         {
             try
             {
-                List<vClientes> clientes = new List<vClientes>();
+                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
-                    var resultado = from p in dtc.vClientes
+                    var resultado = from p in dtc.Cliente
                                     select p;
                     clientes = resultado.ToList();
                 }
 
-                List<vClienteEntidad> clienteEntidad = new List<vClienteEntidad>();
+                List<ClienteEntidad> clienteEntidad = new List<ClienteEntidad>();
 
-                foreach (vClientes item in clientes)
+                foreach (Cliente item in clientes)
                 {
-                    clienteEntidad.Add(new vClienteEntidad(
+                    clienteEntidad.Add(new ClienteEntidad(
                             item.Cedula,
                             item.Nombre,
                             item.Apellido,
@@ -111,24 +111,24 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
-        private vClienteEntidad obtenerCliente(string id)
+        private ClienteEntidad obtenerCliente(string id)
         {
             try
             {
-                vClientes cliente;
+                Cliente cliente;
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
-                    var resultado = from p in dtc.vClientes
+                    var resultado = from p in dtc.Cliente
                                     where p.Cedula == id
                                     select p;
-                    cliente = (vClientes)resultado.FirstOrDefault();
+                    cliente = (Cliente)resultado.FirstOrDefault();
                 }
 
                 if (cliente != null)
                 {
-                    vClienteEntidad clienteEntidad = new vClienteEntidad();
+                    ClienteEntidad clienteEntidad = new ClienteEntidad();
 
-                    clienteEntidad = new vClienteEntidad(
+                    clienteEntidad = new ClienteEntidad(
                             cliente.Cedula,
                             cliente.Nombre,
                             cliente.Apellido,
@@ -152,10 +152,10 @@ namespace ServicioFacturacionApi.Controllers
         {
             try
             {
-                List<vClientes> clientes = new List<vClientes>();
+                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
-                    var resultado = from p in dtc.vClientes
+                    var resultado = from p in dtc.Cliente
                                     where p.Cedula.Contains(cedula) && (p.Nombre + ' ' + p.Apellido).Contains(nombre)
                                     orderby p.Cedula, p.Nombre
                                     select p;
@@ -169,25 +169,25 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
-        private List<vClienteEntidad> obtenerListaFiltrada(int pagina, int cantidad, string cedula, string nombre)
+        private List<ClienteEntidad> obtenerListaFiltrada(int pagina, int cantidad, string cedula, string nombre)
         {
             try
             {
-                List<vClientes> clientes = new List<vClientes>();
+                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
-                    var resultado = from p in dtc.vClientes
+                    var resultado = from p in dtc.Cliente
                                     where p.Cedula.Contains(cedula) && (p.Nombre + ' ' + p.Apellido).Contains(nombre)
                                     orderby p.Cedula, p.Nombre
                                     select p;
                     clientes = resultado.Skip(cantidad * (pagina - 1)).Take(cantidad).ToList();
                 }
 
-                List<vClienteEntidad> clienteEntidad = new List<vClienteEntidad>();
+                List<ClienteEntidad> clienteEntidad = new List<ClienteEntidad>();
 
-                foreach (vClientes item in clientes)
+                foreach (Cliente item in clientes)
                 {
-                    clienteEntidad.Add(new vClienteEntidad(
+                    clienteEntidad.Add(new ClienteEntidad(
                             item.Cedula,
                             item.Nombre,
                             item.Apellido,
@@ -207,53 +207,12 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
-        private bool insertarCliente(vClienteEntidad cliente)
+        private bool insertarCliente(ClienteEntidad cliente)
         {
-            Persona personaBase;
-            using (FacturasDataContext dtc = new FacturasDataContext())
-            {
-                var resultado = from p in dtc.Persona
-                                where p.Cedula == cliente.Cedula
-                                select p;
-                personaBase = (Persona)resultado.FirstOrDefault();
-            }
-
-            if (personaBase == null)
-            {
-                personaBase = new Persona();
-                personaBase.Cedula = cliente.Cedula;
-                personaBase.Nombre = cliente.Nombre;
-                personaBase.Apellido = cliente.Apellido;
-                using (FacturasDataContext dtc = new FacturasDataContext())
-                {
-                    dtc.Connection.Open();
-                    dtc.Transaction = dtc.Connection.BeginTransaction();
-                    using (DbTransaction tscope = dtc.Transaction)
-                    {
-                        try
-                        {
-                            dtc.Persona.InsertOnSubmit(personaBase);
-                            dtc.SubmitChanges();
-                            tscope.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            tscope.Rollback();
-                            dtc.Connection.Close();
-                            throw;
-                        }
-                    }
-                    dtc.Connection.Close();
-                }
-            }
-            else
-            {
-                personaBase.Nombre = cliente.Nombre;
-                personaBase.Apellido = cliente.Apellido;
-            }
-
             Cliente clienteBase = new Cliente();
             clienteBase.Cedula = cliente.Cedula;
+            clienteBase.Nombre = cliente.Nombre;
+            clienteBase.Apellido = cliente.Apellido;
             clienteBase.Telefono = cliente.Telefono;
             clienteBase.Postal = cliente.Postal;
             clienteBase.Direccion = cliente.Direccion;
@@ -283,12 +242,9 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
-        private bool actualizarCliente(vClienteEntidad cliente)
+        private bool actualizarCliente(ClienteEntidad cliente)
         {
-            Persona personaBase = new Persona();
-
             Cliente clienteBase = new Cliente();
-
 
             using (FacturasDataContext dtc = new FacturasDataContext())
             {
@@ -298,26 +254,29 @@ namespace ServicioFacturacionApi.Controllers
                 {
                     try
                     {
-                        var resultado1 = from p in dtc.Persona
+                        var resultado = from p in dtc.Cliente
                                          where p.Cedula == cliente.Cedula
                                          select p;
 
-                        personaBase = (Persona)resultado1.First();
+                        clienteBase = (Cliente)resultado.First();
 
-                        personaBase.Nombre = cliente.Nombre;
-                        personaBase.Apellido = cliente.Apellido;
+                        if (clienteBase.Nombre != cliente.Nombre)
+                            clienteBase.Nombre = cliente.Nombre;
 
-                        var resultado2 = from p in dtc.Cliente
-                                         where p.Cedula == cliente.Cedula
-                                         select p;
+                        if (clienteBase.Apellido != cliente.Apellido)
+                            clienteBase.Apellido = cliente.Apellido;
 
-                        clienteBase = (Cliente)resultado2.First();
+                        if (clienteBase.Telefono != cliente.Telefono)
+                            clienteBase.Telefono = cliente.Telefono;
 
+                        if (clienteBase.Postal != cliente.Postal)
+                            clienteBase.Postal = cliente.Postal;
 
-                        clienteBase.Telefono = cliente.Telefono;
-                        clienteBase.Postal = cliente.Postal;
-                        clienteBase.Direccion = cliente.Direccion;
-                        clienteBase.Correo = cliente.Correo; ;
+                        if (clienteBase.Direccion != cliente.Direccion)
+                            clienteBase.Direccion = cliente.Direccion;
+
+                        if (clienteBase.Correo != cliente.Correo)
+                            clienteBase.Correo = cliente.Correo;
 
                         dtc.SubmitChanges();
                         tscope.Commit();
@@ -334,7 +293,7 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
-        private bool borrarCliente(vClienteEntidad cliente)
+        private bool borrarCliente(ClienteEntidad cliente)
         {
             using (FacturasDataContext dtc = new FacturasDataContext())
             {

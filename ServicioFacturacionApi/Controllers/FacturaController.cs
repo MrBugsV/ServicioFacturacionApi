@@ -222,7 +222,7 @@ namespace ServicioFacturacionApi.Controllers
         {
             try
             {
-                List<vClientes> clientes = new List<vClientes>();
+                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
                     var resultado = from p in dtc.vFacturasCabecera

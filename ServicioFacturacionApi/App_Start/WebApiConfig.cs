@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using ServicioFacturacionApi.Controllers;
 
 namespace ServicioFacturacionApi
 {
@@ -13,6 +14,8 @@ namespace ServicioFacturacionApi
             config.EnableCors();
             // Rutas de API web
             config.MapHttpAttributeRoutes();
+
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using ServicioFacturacionApi.Entidades;
@@ -17,26 +18,26 @@ namespace ServicioFacturacionApi.Controllers
             return obtenerLista();
         }
 
-        //// GET api/Categoria/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/Categoria/5
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-        //// POST api/Categoria
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST api/Categoria
+        public void Post([FromBody] string value)
+        {
+        }
 
-        //// PUT api/Categoria/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/Categoria/5
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-        //// DELETE api/Categoria/5
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/Categoria/5
+        public void Delete(int id)
+        {
+        }
 
         #endregion
 
@@ -70,6 +71,39 @@ namespace ServicioFacturacionApi.Controllers
                 throw;
             }
         }
+        
+        private CategoriaEntidad obtenerCategoria(int id)
+        {
+            try
+            {
+                Categoria categoria = new Categoria();
+                using (FacturasDataContext dtc = new FacturasDataContext())
+                {
+                    var resultado = from p in dtc.Categoria
+                                    where p.Id == id
+                                    select p;
+                    categoria = (Categoria)resultado.FirstOrDefault();
+                }
+
+                if (categoria != null)
+                {
+                    CategoriaEntidad categoriaEntidad = new CategoriaEntidad();
+                    categoriaEntidad = new CategoriaEntidad(
+                        categoria.Id,
+                        categoria.Nombre
+                        );
+
+                    return categoriaEntidad;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         #endregion
     }
 }

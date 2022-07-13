@@ -7,17 +7,6 @@
       <Association Name="Categoria_Producto" Member="Producto" ThisKey="Id" OtherKey="Categoria_Id" Type="Producto" />
     </Type>
   </Table>
-  <Table Name="dbo.Cliente" Member="Cliente">
-    <Type Name="Cliente">
-      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Postal" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="Correo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Cliente_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Cliente_Id" Type="FacturaCabecera" />
-      <Association Name="Persona_Cliente" Member="Persona" ThisKey="Cedula" OtherKey="Cedula" Type="Persona" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.FacturaDetalle" Member="FacturaDetalle">
     <Type Name="FacturaDetalle">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -27,15 +16,6 @@
       <Column Name="Producto_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Producto_FacturaDetalle" Member="Producto" ThisKey="Producto_Id" OtherKey="Id" Type="Producto" IsForeignKey="true" />
       <Association Name="FacturaCabecera_FacturaDetalle" Member="FacturaCabecera" ThisKey="Factura_Id" OtherKey="Id" Type="FacturaCabecera" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Persona" Member="Persona">
-    <Type Name="Persona">
-      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Association Name="Persona_Cliente" Member="Cliente" ThisKey="Cedula" OtherKey="Cedula" Type="Cliente" Cardinality="One" />
-      <Association Name="Persona_Usuario" Member="Usuario" ThisKey="Cedula" OtherKey="Cedula" Type="Usuario" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.Producto" Member="Producto">
@@ -48,26 +28,6 @@
       <Column Name="Imagen" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Producto_FacturaDetalle" Member="FacturaDetalle" ThisKey="Id" OtherKey="Producto_Id" Type="FacturaDetalle" />
       <Association Name="Categoria_Producto" Member="Categoria" ThisKey="Categoria_Id" OtherKey="Id" Type="Categoria" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Usuario" Member="Usuario">
-    <Type Name="Usuario">
-      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Usuario_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Usuario_id" Type="FacturaCabecera" />
-      <Association Name="Persona_Usuario" Member="Persona" ThisKey="Cedula" OtherKey="Cedula" Type="Persona" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vClientes" Member="vClientes">
-    <Type Name="vClientes">
-      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Postal" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="Correo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.vProductos" Member="vProductos">
@@ -93,21 +53,6 @@
       <Column Name="IdProducto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.FacturaCabecera" Member="FacturaCabecera">
-    <Type Name="FacturaCabecera">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Cliente_Id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
-      <Column Name="Usuario_id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Iva" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
-      <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="FacturaCabecera_FacturaDetalle" Member="FacturaDetalle" ThisKey="Id" OtherKey="Factura_Id" Type="FacturaDetalle" />
-      <Association Name="Cliente_FacturaCabecera" Member="Cliente" ThisKey="Cliente_Id" OtherKey="Cedula" Type="Cliente" IsForeignKey="true" />
-      <Association Name="Usuario_FacturaCabecera" Member="Usuario" ThisKey="Usuario_id" OtherKey="Cedula" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.vFacturasCabecera" Member="vFacturasCabecera">
     <Type Name="vFacturasCabecera">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -118,18 +63,45 @@
       <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.vUsuarios" Member="vUsuarios">
-    <Type Name="vUsuarios">
-      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+  <Table Name="dbo.Cliente" Member="Cliente">
+    <Type Name="Cliente">
+      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Postal" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Cliente_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Cliente_Id" Type="FacturaCabecera" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Empleado" Member="Empleado">
+    <Type Name="Empleado">
+      <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Empleado_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Empleado_id" Type="FacturaCabecera" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FacturaCabecera" Member="FacturaCabecera">
+    <Type Name="FacturaCabecera">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cliente_Id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="Empleado_id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Iva" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="FacturaCabecera_FacturaDetalle" Member="FacturaDetalle" ThisKey="Id" OtherKey="Factura_Id" Type="FacturaDetalle" />
+      <Association Name="Cliente_FacturaCabecera" Member="Cliente" ThisKey="Cliente_Id" OtherKey="Cedula" Type="Cliente" IsForeignKey="true" />
+      <Association Name="Empleado_FacturaCabecera" Member="Empleado" ThisKey="Empleado_id" OtherKey="Cedula" Type="Empleado" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

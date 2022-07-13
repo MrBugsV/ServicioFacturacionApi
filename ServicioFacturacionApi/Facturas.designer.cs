@@ -33,21 +33,18 @@ namespace ServicioFacturacionApi
     partial void InsertCategoria(Categoria instance);
     partial void UpdateCategoria(Categoria instance);
     partial void DeleteCategoria(Categoria instance);
-    partial void InsertCliente(Cliente instance);
-    partial void UpdateCliente(Cliente instance);
-    partial void DeleteCliente(Cliente instance);
     partial void InsertFacturaDetalle(FacturaDetalle instance);
     partial void UpdateFacturaDetalle(FacturaDetalle instance);
     partial void DeleteFacturaDetalle(FacturaDetalle instance);
-    partial void InsertPersona(Persona instance);
-    partial void UpdatePersona(Persona instance);
-    partial void DeletePersona(Persona instance);
     partial void InsertProducto(Producto instance);
     partial void UpdateProducto(Producto instance);
     partial void DeleteProducto(Producto instance);
-    partial void InsertUsuario(Usuario instance);
-    partial void UpdateUsuario(Usuario instance);
-    partial void DeleteUsuario(Usuario instance);
+    partial void InsertCliente(Cliente instance);
+    partial void UpdateCliente(Cliente instance);
+    partial void DeleteCliente(Cliente instance);
+    partial void InsertEmpleado(Empleado instance);
+    partial void UpdateEmpleado(Empleado instance);
+    partial void DeleteEmpleado(Empleado instance);
     partial void InsertFacturaCabecera(FacturaCabecera instance);
     partial void UpdateFacturaCabecera(FacturaCabecera instance);
     partial void DeleteFacturaCabecera(FacturaCabecera instance);
@@ -91,14 +88,6 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		public System.Data.Linq.Table<Cliente> Cliente
-		{
-			get
-			{
-				return this.GetTable<Cliente>();
-			}
-		}
-		
 		public System.Data.Linq.Table<FacturaDetalle> FacturaDetalle
 		{
 			get
@@ -107,35 +96,11 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		public System.Data.Linq.Table<Persona> Persona
-		{
-			get
-			{
-				return this.GetTable<Persona>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Producto> Producto
 		{
 			get
 			{
 				return this.GetTable<Producto>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Usuario> Usuario
-		{
-			get
-			{
-				return this.GetTable<Usuario>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vClientes> vClientes
-		{
-			get
-			{
-				return this.GetTable<vClientes>();
 			}
 		}
 		
@@ -155,14 +120,6 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		public System.Data.Linq.Table<FacturaCabecera> FacturaCabecera
-		{
-			get
-			{
-				return this.GetTable<FacturaCabecera>();
-			}
-		}
-		
 		public System.Data.Linq.Table<vFacturasCabecera> vFacturasCabecera
 		{
 			get
@@ -171,11 +128,27 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		public System.Data.Linq.Table<vUsuarios> vUsuarios
+		public System.Data.Linq.Table<Cliente> Cliente
 		{
 			get
 			{
-				return this.GetTable<vUsuarios>();
+				return this.GetTable<Cliente>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Empleado> Empleado
+		{
+			get
+			{
+				return this.GetTable<Empleado>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FacturaCabecera> FacturaCabecera
+		{
+			get
+			{
+				return this.GetTable<FacturaCabecera>();
 			}
 		}
 	}
@@ -291,233 +264,6 @@ namespace ServicioFacturacionApi
 		{
 			this.SendPropertyChanging();
 			entity.Categoria = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cliente")]
-	public partial class Cliente : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Cedula;
-		
-		private string _Telefono;
-		
-		private string _Direccion;
-		
-		private string _Postal;
-		
-		private string _Correo;
-		
-		private EntitySet<FacturaCabecera> _FacturaCabecera;
-		
-		private EntityRef<Persona> _Persona;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCedulaChanging(string value);
-    partial void OnCedulaChanged();
-    partial void OnTelefonoChanging(string value);
-    partial void OnTelefonoChanged();
-    partial void OnDireccionChanging(string value);
-    partial void OnDireccionChanged();
-    partial void OnPostalChanging(string value);
-    partial void OnPostalChanged();
-    partial void OnCorreoChanging(string value);
-    partial void OnCorreoChanged();
-    #endregion
-		
-		public Cliente()
-		{
-			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
-			this._Persona = default(EntityRef<Persona>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Cedula
-		{
-			get
-			{
-				return this._Cedula;
-			}
-			set
-			{
-				if ((this._Cedula != value))
-				{
-					if (this._Persona.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCedulaChanging(value);
-					this.SendPropertyChanging();
-					this._Cedula = value;
-					this.SendPropertyChanged("Cedula");
-					this.OnCedulaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
-		public string Telefono
-		{
-			get
-			{
-				return this._Telefono;
-			}
-			set
-			{
-				if ((this._Telefono != value))
-				{
-					this.OnTelefonoChanging(value);
-					this.SendPropertyChanging();
-					this._Telefono = value;
-					this.SendPropertyChanged("Telefono");
-					this.OnTelefonoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
-		public string Direccion
-		{
-			get
-			{
-				return this._Direccion;
-			}
-			set
-			{
-				if ((this._Direccion != value))
-				{
-					this.OnDireccionChanging(value);
-					this.SendPropertyChanging();
-					this._Direccion = value;
-					this.SendPropertyChanged("Direccion");
-					this.OnDireccionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Postal", DbType="NVarChar(5)")]
-		public string Postal
-		{
-			get
-			{
-				return this._Postal;
-			}
-			set
-			{
-				if ((this._Postal != value))
-				{
-					this.OnPostalChanging(value);
-					this.SendPropertyChanging();
-					this._Postal = value;
-					this.SendPropertyChanged("Postal");
-					this.OnPostalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(50)")]
-		public string Correo
-		{
-			get
-			{
-				return this._Correo;
-			}
-			set
-			{
-				if ((this._Correo != value))
-				{
-					this.OnCorreoChanging(value);
-					this.SendPropertyChanging();
-					this._Correo = value;
-					this.SendPropertyChanged("Correo");
-					this.OnCorreoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cliente_FacturaCabecera", Storage="_FacturaCabecera", ThisKey="Cedula", OtherKey="Cliente_Id")]
-		public EntitySet<FacturaCabecera> FacturaCabecera
-		{
-			get
-			{
-				return this._FacturaCabecera;
-			}
-			set
-			{
-				this._FacturaCabecera.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Cliente", Storage="_Persona", ThisKey="Cedula", OtherKey="Cedula", IsForeignKey=true)]
-		public Persona Persona
-		{
-			get
-			{
-				return this._Persona.Entity;
-			}
-			set
-			{
-				Persona previousValue = this._Persona.Entity;
-				if (((previousValue != value) 
-							|| (this._Persona.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Persona.Entity = null;
-						previousValue.Cliente = null;
-					}
-					this._Persona.Entity = value;
-					if ((value != null))
-					{
-						value.Cliente = this;
-						this._Cedula = value.Cedula;
-					}
-					else
-					{
-						this._Cedula = default(string);
-					}
-					this.SendPropertyChanged("Persona");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_FacturaCabecera(FacturaCabecera entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cliente = this;
-		}
-		
-		private void detach_FacturaCabecera(FacturaCabecera entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cliente = null;
 		}
 	}
 	
@@ -736,180 +482,6 @@ namespace ServicioFacturacionApi
 						this._Factura_Id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("FacturaCabecera");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Persona")]
-	public partial class Persona : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Cedula;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private EntityRef<Cliente> _Cliente;
-		
-		private EntityRef<Usuario> _Usuario;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCedulaChanging(string value);
-    partial void OnCedulaChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    partial void OnApellidoChanging(string value);
-    partial void OnApellidoChanged();
-    #endregion
-		
-		public Persona()
-		{
-			this._Cliente = default(EntityRef<Cliente>);
-			this._Usuario = default(EntityRef<Usuario>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Cedula
-		{
-			get
-			{
-				return this._Cedula;
-			}
-			set
-			{
-				if ((this._Cedula != value))
-				{
-					this.OnCedulaChanging(value);
-					this.SendPropertyChanging();
-					this._Cedula = value;
-					this.SendPropertyChanged("Cedula");
-					this.OnCedulaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(20)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(20)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this.OnApellidoChanging(value);
-					this.SendPropertyChanging();
-					this._Apellido = value;
-					this.SendPropertyChanged("Apellido");
-					this.OnApellidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Cliente", Storage="_Cliente", ThisKey="Cedula", OtherKey="Cedula", IsUnique=true, IsForeignKey=false)]
-		public Cliente Cliente
-		{
-			get
-			{
-				return this._Cliente.Entity;
-			}
-			set
-			{
-				Cliente previousValue = this._Cliente.Entity;
-				if (((previousValue != value) 
-							|| (this._Cliente.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Cliente.Entity = null;
-						previousValue.Persona = null;
-					}
-					this._Cliente.Entity = value;
-					if ((value != null))
-					{
-						value.Persona = this;
-					}
-					this.SendPropertyChanged("Cliente");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Usuario", Storage="_Usuario", ThisKey="Cedula", OtherKey="Cedula", IsUnique=true, IsForeignKey=false)]
-		public Usuario Usuario
-		{
-			get
-			{
-				return this._Usuario.Entity;
-			}
-			set
-			{
-				Usuario previousValue = this._Usuario.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuario.Entity = null;
-						previousValue.Persona = null;
-					}
-					this._Usuario.Entity = value;
-					if ((value != null))
-					{
-						value.Persona = this;
-					}
-					this.SendPropertyChanged("Usuario");
 				}
 			}
 		}
@@ -1183,320 +755,6 @@ namespace ServicioFacturacionApi
 		{
 			this.SendPropertyChanging();
 			entity.Producto = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
-	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Cedula;
-		
-		private string _Contraseña;
-		
-		private System.Nullable<bool> _Admin;
-		
-		private EntitySet<FacturaCabecera> _FacturaCabecera;
-		
-		private EntityRef<Persona> _Persona;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCedulaChanging(string value);
-    partial void OnCedulaChanged();
-    partial void OnContraseñaChanging(string value);
-    partial void OnContraseñaChanged();
-    partial void OnAdminChanging(System.Nullable<bool> value);
-    partial void OnAdminChanged();
-    #endregion
-		
-		public Usuario()
-		{
-			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
-			this._Persona = default(EntityRef<Persona>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Cedula
-		{
-			get
-			{
-				return this._Cedula;
-			}
-			set
-			{
-				if ((this._Cedula != value))
-				{
-					if (this._Persona.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCedulaChanging(value);
-					this.SendPropertyChanging();
-					this._Cedula = value;
-					this.SendPropertyChanged("Cedula");
-					this.OnCedulaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contraseña", DbType="NVarChar(50)")]
-		public string Contraseña
-		{
-			get
-			{
-				return this._Contraseña;
-			}
-			set
-			{
-				if ((this._Contraseña != value))
-				{
-					this.OnContraseñaChanging(value);
-					this.SendPropertyChanging();
-					this._Contraseña = value;
-					this.SendPropertyChanged("Contraseña");
-					this.OnContraseñaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admin", DbType="Bit")]
-		public System.Nullable<bool> Admin
-		{
-			get
-			{
-				return this._Admin;
-			}
-			set
-			{
-				if ((this._Admin != value))
-				{
-					this.OnAdminChanging(value);
-					this.SendPropertyChanging();
-					this._Admin = value;
-					this.SendPropertyChanged("Admin");
-					this.OnAdminChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_FacturaCabecera", Storage="_FacturaCabecera", ThisKey="Cedula", OtherKey="Usuario_id")]
-		public EntitySet<FacturaCabecera> FacturaCabecera
-		{
-			get
-			{
-				return this._FacturaCabecera;
-			}
-			set
-			{
-				this._FacturaCabecera.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Persona_Usuario", Storage="_Persona", ThisKey="Cedula", OtherKey="Cedula", IsForeignKey=true)]
-		public Persona Persona
-		{
-			get
-			{
-				return this._Persona.Entity;
-			}
-			set
-			{
-				Persona previousValue = this._Persona.Entity;
-				if (((previousValue != value) 
-							|| (this._Persona.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Persona.Entity = null;
-						previousValue.Usuario = null;
-					}
-					this._Persona.Entity = value;
-					if ((value != null))
-					{
-						value.Usuario = this;
-						this._Cedula = value.Cedula;
-					}
-					else
-					{
-						this._Cedula = default(string);
-					}
-					this.SendPropertyChanged("Persona");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_FacturaCabecera(FacturaCabecera entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_FacturaCabecera(FacturaCabecera entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vClientes")]
-	public partial class vClientes
-	{
-		
-		private string _Cedula;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private string _Telefono;
-		
-		private string _Direccion;
-		
-		private string _Postal;
-		
-		private string _Correo;
-		
-		public vClientes()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false)]
-		public string Cedula
-		{
-			get
-			{
-				return this._Cedula;
-			}
-			set
-			{
-				if ((this._Cedula != value))
-				{
-					this._Cedula = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(20)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(20)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
-		public string Telefono
-		{
-			get
-			{
-				return this._Telefono;
-			}
-			set
-			{
-				if ((this._Telefono != value))
-				{
-					this._Telefono = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
-		public string Direccion
-		{
-			get
-			{
-				return this._Direccion;
-			}
-			set
-			{
-				if ((this._Direccion != value))
-				{
-					this._Direccion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Postal", DbType="NVarChar(5)")]
-		public string Postal
-		{
-			get
-			{
-				return this._Postal;
-			}
-			set
-			{
-				if ((this._Postal != value))
-				{
-					this._Postal = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(50)")]
-		public string Correo
-		{
-			get
-			{
-				return this._Correo;
-			}
-			set
-			{
-				if ((this._Correo != value))
-				{
-					this._Correo = value;
-				}
-			}
 		}
 	}
 	
@@ -1788,6 +1046,609 @@ namespace ServicioFacturacionApi
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vFacturasCabecera")]
+	public partial class vFacturasCabecera
+	{
+		
+		private int _Id;
+		
+		private string _Cliente_Id;
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		private System.Nullable<decimal> _Subtotal;
+		
+		private System.Nullable<decimal> _Iva;
+		
+		private System.Nullable<decimal> _Total;
+		
+		private string _Telefono;
+		
+		private string _Direccion;
+		
+		private System.Nullable<bool> _Anulado;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		public vFacturasCabecera()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cliente_Id", DbType="NVarChar(13)")]
+		public string Cliente_Id
+		{
+			get
+			{
+				return this._Cliente_Id;
+			}
+			set
+			{
+				if ((this._Cliente_Id != value))
+				{
+					this._Cliente_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtotal", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Subtotal
+		{
+			get
+			{
+				return this._Subtotal;
+			}
+			set
+			{
+				if ((this._Subtotal != value))
+				{
+					this._Subtotal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Iva", DbType="Decimal(3,0)")]
+		public System.Nullable<decimal> Iva
+		{
+			get
+			{
+				return this._Iva;
+			}
+			set
+			{
+				if ((this._Iva != value))
+				{
+					this._Iva = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
+		public string Telefono
+		{
+			get
+			{
+				return this._Telefono;
+			}
+			set
+			{
+				if ((this._Telefono != value))
+				{
+					this._Telefono = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
+		public string Direccion
+		{
+			get
+			{
+				return this._Direccion;
+			}
+			set
+			{
+				if ((this._Direccion != value))
+				{
+					this._Direccion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Anulado", DbType="Bit")]
+		public System.Nullable<bool> Anulado
+		{
+			get
+			{
+				return this._Anulado;
+			}
+			set
+			{
+				if ((this._Anulado != value))
+				{
+					this._Anulado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cliente")]
+	public partial class Cliente : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Cedula;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private string _Telefono;
+		
+		private string _Direccion;
+		
+		private string _Postal;
+		
+		private string _Correo;
+		
+		private EntitySet<FacturaCabecera> _FacturaCabecera;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCedulaChanging(string value);
+    partial void OnCedulaChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnApellidoChanging(string value);
+    partial void OnApellidoChanged();
+    partial void OnTelefonoChanging(string value);
+    partial void OnTelefonoChanged();
+    partial void OnDireccionChanging(string value);
+    partial void OnDireccionChanged();
+    partial void OnPostalChanging(string value);
+    partial void OnPostalChanged();
+    partial void OnCorreoChanging(string value);
+    partial void OnCorreoChanged();
+    #endregion
+		
+		public Cliente()
+		{
+			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Cedula
+		{
+			get
+			{
+				return this._Cedula;
+			}
+			set
+			{
+				if ((this._Cedula != value))
+				{
+					this.OnCedulaChanging(value);
+					this.SendPropertyChanging();
+					this._Cedula = value;
+					this.SendPropertyChanged("Cedula");
+					this.OnCedulaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this.OnApellidoChanging(value);
+					this.SendPropertyChanging();
+					this._Apellido = value;
+					this.SendPropertyChanged("Apellido");
+					this.OnApellidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
+		public string Telefono
+		{
+			get
+			{
+				return this._Telefono;
+			}
+			set
+			{
+				if ((this._Telefono != value))
+				{
+					this.OnTelefonoChanging(value);
+					this.SendPropertyChanging();
+					this._Telefono = value;
+					this.SendPropertyChanged("Telefono");
+					this.OnTelefonoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
+		public string Direccion
+		{
+			get
+			{
+				return this._Direccion;
+			}
+			set
+			{
+				if ((this._Direccion != value))
+				{
+					this.OnDireccionChanging(value);
+					this.SendPropertyChanging();
+					this._Direccion = value;
+					this.SendPropertyChanged("Direccion");
+					this.OnDireccionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Postal", DbType="NVarChar(5)")]
+		public string Postal
+		{
+			get
+			{
+				return this._Postal;
+			}
+			set
+			{
+				if ((this._Postal != value))
+				{
+					this.OnPostalChanging(value);
+					this.SendPropertyChanging();
+					this._Postal = value;
+					this.SendPropertyChanged("Postal");
+					this.OnPostalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(50)")]
+		public string Correo
+		{
+			get
+			{
+				return this._Correo;
+			}
+			set
+			{
+				if ((this._Correo != value))
+				{
+					this.OnCorreoChanging(value);
+					this.SendPropertyChanging();
+					this._Correo = value;
+					this.SendPropertyChanged("Correo");
+					this.OnCorreoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cliente_FacturaCabecera", Storage="_FacturaCabecera", ThisKey="Cedula", OtherKey="Cliente_Id")]
+		public EntitySet<FacturaCabecera> FacturaCabecera
+		{
+			get
+			{
+				return this._FacturaCabecera;
+			}
+			set
+			{
+				this._FacturaCabecera.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_FacturaCabecera(FacturaCabecera entity)
+		{
+			this.SendPropertyChanging();
+			entity.Cliente = this;
+		}
+		
+		private void detach_FacturaCabecera(FacturaCabecera entity)
+		{
+			this.SendPropertyChanging();
+			entity.Cliente = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Empleado")]
+	public partial class Empleado : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Cedula;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private System.Nullable<bool> _Admin;
+		
+		private EntitySet<FacturaCabecera> _FacturaCabecera;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCedulaChanging(string value);
+    partial void OnCedulaChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnApellidoChanging(string value);
+    partial void OnApellidoChanged();
+    partial void OnAdminChanging(System.Nullable<bool> value);
+    partial void OnAdminChanged();
+    #endregion
+		
+		public Empleado()
+		{
+			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Cedula
+		{
+			get
+			{
+				return this._Cedula;
+			}
+			set
+			{
+				if ((this._Cedula != value))
+				{
+					this.OnCedulaChanging(value);
+					this.SendPropertyChanging();
+					this._Cedula = value;
+					this.SendPropertyChanged("Cedula");
+					this.OnCedulaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this.OnApellidoChanging(value);
+					this.SendPropertyChanging();
+					this._Apellido = value;
+					this.SendPropertyChanged("Apellido");
+					this.OnApellidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admin", DbType="Bit")]
+		public System.Nullable<bool> Admin
+		{
+			get
+			{
+				return this._Admin;
+			}
+			set
+			{
+				if ((this._Admin != value))
+				{
+					this.OnAdminChanging(value);
+					this.SendPropertyChanging();
+					this._Admin = value;
+					this.SendPropertyChanged("Admin");
+					this.OnAdminChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Empleado_FacturaCabecera", Storage="_FacturaCabecera", ThisKey="Cedula", OtherKey="Empleado_id")]
+		public EntitySet<FacturaCabecera> FacturaCabecera
+		{
+			get
+			{
+				return this._FacturaCabecera;
+			}
+			set
+			{
+				this._FacturaCabecera.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_FacturaCabecera(FacturaCabecera entity)
+		{
+			this.SendPropertyChanging();
+			entity.Empleado = this;
+		}
+		
+		private void detach_FacturaCabecera(FacturaCabecera entity)
+		{
+			this.SendPropertyChanging();
+			entity.Empleado = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FacturaCabecera")]
 	public partial class FacturaCabecera : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1798,7 +1659,7 @@ namespace ServicioFacturacionApi
 		
 		private string _Cliente_Id;
 		
-		private string _Usuario_id;
+		private string _Empleado_id;
 		
 		private System.Nullable<System.DateTime> _Fecha;
 		
@@ -1814,7 +1675,7 @@ namespace ServicioFacturacionApi
 		
 		private EntityRef<Cliente> _Cliente;
 		
-		private EntityRef<Usuario> _Usuario;
+		private EntityRef<Empleado> _Empleado;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -1824,8 +1685,8 @@ namespace ServicioFacturacionApi
     partial void OnIdChanged();
     partial void OnCliente_IdChanging(string value);
     partial void OnCliente_IdChanged();
-    partial void OnUsuario_idChanging(string value);
-    partial void OnUsuario_idChanged();
+    partial void OnEmpleado_idChanging(string value);
+    partial void OnEmpleado_idChanged();
     partial void OnFechaChanging(System.Nullable<System.DateTime> value);
     partial void OnFechaChanged();
     partial void OnSubtotalChanging(System.Nullable<decimal> value);
@@ -1842,7 +1703,7 @@ namespace ServicioFacturacionApi
 		{
 			this._FacturaDetalle = new EntitySet<FacturaDetalle>(new Action<FacturaDetalle>(this.attach_FacturaDetalle), new Action<FacturaDetalle>(this.detach_FacturaDetalle));
 			this._Cliente = default(EntityRef<Cliente>);
-			this._Usuario = default(EntityRef<Usuario>);
+			this._Empleado = default(EntityRef<Empleado>);
 			OnCreated();
 		}
 		
@@ -1890,26 +1751,26 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Usuario_id", DbType="NVarChar(13)")]
-		public string Usuario_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Empleado_id", DbType="NVarChar(13)")]
+		public string Empleado_id
 		{
 			get
 			{
-				return this._Usuario_id;
+				return this._Empleado_id;
 			}
 			set
 			{
-				if ((this._Usuario_id != value))
+				if ((this._Empleado_id != value))
 				{
-					if (this._Usuario.HasLoadedOrAssignedValue)
+					if (this._Empleado.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnUsuario_idChanging(value);
+					this.OnEmpleado_idChanging(value);
 					this.SendPropertyChanging();
-					this._Usuario_id = value;
-					this.SendPropertyChanged("Usuario_id");
-					this.OnUsuario_idChanged();
+					this._Empleado_id = value;
+					this.SendPropertyChanged("Empleado_id");
+					this.OnEmpleado_idChanged();
 				}
 			}
 		}
@@ -2061,36 +1922,36 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_FacturaCabecera", Storage="_Usuario", ThisKey="Usuario_id", OtherKey="Cedula", IsForeignKey=true)]
-		public Usuario Usuario
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Empleado_FacturaCabecera", Storage="_Empleado", ThisKey="Empleado_id", OtherKey="Cedula", IsForeignKey=true)]
+		public Empleado Empleado
 		{
 			get
 			{
-				return this._Usuario.Entity;
+				return this._Empleado.Entity;
 			}
 			set
 			{
-				Usuario previousValue = this._Usuario.Entity;
+				Empleado previousValue = this._Empleado.Entity;
 				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+							|| (this._Empleado.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Usuario.Entity = null;
+						this._Empleado.Entity = null;
 						previousValue.FacturaCabecera.Remove(this);
 					}
-					this._Usuario.Entity = value;
+					this._Empleado.Entity = value;
 					if ((value != null))
 					{
 						value.FacturaCabecera.Add(this);
-						this._Usuario_id = value.Cedula;
+						this._Empleado_id = value.Cedula;
 					}
 					else
 					{
-						this._Usuario_id = default(string);
+						this._Empleado_id = default(string);
 					}
-					this.SendPropertyChanged("Usuario");
+					this.SendPropertyChanged("Empleado");
 				}
 			}
 		}
@@ -2125,312 +1986,6 @@ namespace ServicioFacturacionApi
 		{
 			this.SendPropertyChanging();
 			entity.FacturaCabecera = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vFacturasCabecera")]
-	public partial class vFacturasCabecera
-	{
-		
-		private int _Id;
-		
-		private string _Cliente_Id;
-		
-		private System.Nullable<System.DateTime> _Fecha;
-		
-		private System.Nullable<decimal> _Subtotal;
-		
-		private System.Nullable<decimal> _Iva;
-		
-		private System.Nullable<decimal> _Total;
-		
-		private string _Telefono;
-		
-		private string _Direccion;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private System.Nullable<bool> _Anulado;
-		
-		public vFacturasCabecera()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cliente_Id", DbType="NVarChar(13)")]
-		public string Cliente_Id
-		{
-			get
-			{
-				return this._Cliente_Id;
-			}
-			set
-			{
-				if ((this._Cliente_Id != value))
-				{
-					this._Cliente_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
-		public System.Nullable<System.DateTime> Fecha
-		{
-			get
-			{
-				return this._Fecha;
-			}
-			set
-			{
-				if ((this._Fecha != value))
-				{
-					this._Fecha = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtotal", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Subtotal
-		{
-			get
-			{
-				return this._Subtotal;
-			}
-			set
-			{
-				if ((this._Subtotal != value))
-				{
-					this._Subtotal = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Iva", DbType="Decimal(3,0)")]
-		public System.Nullable<decimal> Iva
-		{
-			get
-			{
-				return this._Iva;
-			}
-			set
-			{
-				if ((this._Iva != value))
-				{
-					this._Iva = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(10,2)")]
-		public System.Nullable<decimal> Total
-		{
-			get
-			{
-				return this._Total;
-			}
-			set
-			{
-				if ((this._Total != value))
-				{
-					this._Total = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
-		public string Telefono
-		{
-			get
-			{
-				return this._Telefono;
-			}
-			set
-			{
-				if ((this._Telefono != value))
-				{
-					this._Telefono = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
-		public string Direccion
-		{
-			get
-			{
-				return this._Direccion;
-			}
-			set
-			{
-				if ((this._Direccion != value))
-				{
-					this._Direccion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(20)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(20)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Anulado", DbType="Bit")]
-		public System.Nullable<bool> Anulado
-		{
-			get
-			{
-				return this._Anulado;
-			}
-			set
-			{
-				if ((this._Anulado != value))
-				{
-					this._Anulado = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vUsuarios")]
-	public partial class vUsuarios
-	{
-		
-		private string _Cedula;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private string _Contraseña;
-		
-		private System.Nullable<bool> _Admin;
-		
-		public vUsuarios()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cedula", DbType="NVarChar(13) NOT NULL", CanBeNull=false)]
-		public string Cedula
-		{
-			get
-			{
-				return this._Cedula;
-			}
-			set
-			{
-				if ((this._Cedula != value))
-				{
-					this._Cedula = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(20)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(20)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contraseña", DbType="NVarChar(50)")]
-		public string Contraseña
-		{
-			get
-			{
-				return this._Contraseña;
-			}
-			set
-			{
-				if ((this._Contraseña != value))
-				{
-					this._Contraseña = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Admin", DbType="Bit")]
-		public System.Nullable<bool> Admin
-		{
-			get
-			{
-				return this._Admin;
-			}
-			set
-			{
-				if ((this._Admin != value))
-				{
-					this._Admin = value;
-				}
-			}
 		}
 	}
 }

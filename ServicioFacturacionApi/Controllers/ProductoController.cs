@@ -5,6 +5,7 @@ using System.Web.Http;
 using ServicioFacturacionApi.Entidades;
 using System.Web.Http.Cors;
 using System.Data.Common;
+using System.IO;
 
 namespace ServicioFacturacionApi.Controllers
 {
@@ -85,6 +86,7 @@ namespace ServicioFacturacionApi.Controllers
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
                     var resultado = from p in dtc.vProductos
+                                    where p.Stock > 0
                                     select p;
                     productos = resultado.ToList();
                 }
@@ -153,7 +155,7 @@ namespace ServicioFacturacionApi.Controllers
         {
             try
             {
-                List<vClientes> clientes = new List<vClientes>();
+                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
                     var resultado = from p in dtc.vProductos

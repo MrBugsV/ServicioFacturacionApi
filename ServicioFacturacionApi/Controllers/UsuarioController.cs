@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using ServicioFacturacionApi.Autenticador_Jwt;
 using ServicioFacturacionApi.Entidades;
 
 namespace ServicioFacturacionApi.Controllers
@@ -22,14 +19,13 @@ namespace ServicioFacturacionApi.Controllers
 
         private IHttpActionResult autenticarUsuario(vUsuarioEntidad usuario)
         {
-            vUsuarios usuarioBase;
+            Empleado usuarioBase;
             using (FacturasDataContext dtc = new FacturasDataContext())
             {
-                var resultado = from p in dtc.vUsuarios
+                var resultado = from p in dtc.Empleado
                                 where p.Cedula == usuario.Cedula
-                                    && p.Contraseña == usuario.Contraseña
                                 select p;
-                usuarioBase = (vUsuarios)resultado.FirstOrDefault();
+                usuarioBase = (Empleado)resultado.FirstOrDefault();
             }
 
             //if (usuarioBase != null)

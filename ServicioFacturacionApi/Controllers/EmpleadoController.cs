@@ -7,7 +7,7 @@ using ServicioFacturacionApi.Entidades;
 
 namespace ServicioFacturacionApi.Controllers
 {
-    public class UsuarioController : ApiController
+    public class EmpleadoController : ApiController
     {
         [HttpPost]
         [Route("api/Usuario")]

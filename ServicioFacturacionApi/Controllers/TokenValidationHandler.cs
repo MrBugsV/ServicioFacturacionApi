@@ -41,18 +41,15 @@ namespace ServicioFacturacionApi.Controllers
             try
             {
                 var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
-                var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
-                var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
                 var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
 
                 SecurityToken securityToken;
                 var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
                 TokenValidationParameters validationParameters = new TokenValidationParameters()
                 {
-                    ValidAudience = audienceToken,
-                    ValidIssuer = issuerToken,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
                     LifetimeValidator = this.LifetimeValidator,
                     IssuerSigningKey = securityKey
                 };

@@ -1,33 +1,164 @@
 ﻿using ServicioFacturacionApi.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ServicioFacturacionApi.Controllers
 {
     [AllowAnonymous]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : ApiController
     {
+
+        #region Servicios REST
+
         [HttpPost]
-        public IHttpActionResult login(LoginEntidad login)
+        [Route("api/LoginEmpleado")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult loginEmpleado(LoginEntidad login)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (verificarLogin(login))
+            if (verificarLoginEmpleado(login))
             {
                 var token = TokenGenerator.GenerateTokenJwt(login.Usuario);
+                return Ok(token);
             }
-
-            return Ok();
+            else
+                return Unauthorized();
         }
 
-        public bool verificarLogin(LoginEntidad login)
+        [HttpPost]
+        [Route("api/LoginCliente")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult loginCliente(LoginEntidad login)
         {
-            return true;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (verificarLoginCliente(login))
+            {
+                var token = TokenGenerator.GenerateTokenJwt(login.Usuario);
+                return Ok(token);
+            }
+            else
+                return Unauthorized();
         }
+
+        [HttpPost]
+        [Route("api/RegistrarEmpleado")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult registrarEmpleado(LoginEntidad login)
+        {
+            return registrarLoginEmpleado(login);
+        }
+
+        [HttpPost]
+        [Route("api/RegistrarCliente")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult registrarCliente(LoginEntidad login)
+        {
+            return registrarLoginCliente(login);
+        }
+
+        #endregion
+
+        #region Métodos Base de Datos
+
+        public bool verificarLoginEmpleado(LoginEntidad login)
+        {
+            LoginEmpleado empleado;
+            using (FacturasDataContext dtc = new FacturasDataContext())
+            {
+                var resultado = from p in dtc.LoginEmpleado
+                                where p.Usuario == login.Usuario
+                                    && p.Contraseña == login.Contraseña
+                                select p;
+                empleado = (LoginEmpleado)resultado.FirstOrDefault();
+            }
+            return empleado != null;
+        }
+
+        public bool verificarLoginCliente(LoginEntidad login)
+        {
+            LoginCliente empleado;
+            using (FacturasDataContext dtc = new FacturasDataContext())
+            {
+                var resultado = from p in dtc.LoginCliente
+                                where p.Usuario == login.Usuario
+                                    && p.Contraseña == login.Contraseña
+                                select p;
+                empleado = (LoginCliente)resultado.FirstOrDefault();
+            }
+            return empleado != null;
+        }
+
+        public IHttpActionResult registrarLoginEmpleado(LoginEntidad login)
+        {
+            LoginEmpleado loginBase = new LoginEmpleado();
+            loginBase.Usuario = login.Usuario;
+            loginBase.Contraseña = login.Contraseña;
+
+            using (FacturasDataContext dtc = new FacturasDataContext())
+            {
+                dtc.Connection.Open();
+                dtc.Transaction = dtc.Connection.BeginTransaction();
+                using (DbTransaction tscope = dtc.Transaction)
+                {
+                    try
+                    {
+                        dtc.LoginEmpleado.InsertOnSubmit(loginBase);
+                        dtc.SubmitChanges();
+                        tscope.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        tscope.Rollback();
+                        dtc.Connection.Close();
+                        throw;
+                    }
+                }
+                dtc.Connection.Close();
+                return Ok(true);
+            }
+        }
+
+        public IHttpActionResult registrarLoginCliente(LoginEntidad login)
+        {
+            LoginCliente loginBase = new LoginCliente();
+            loginBase.Usuario = login.Usuario;
+            loginBase.Contraseña = login.Contraseña;
+
+            using (FacturasDataContext dtc = new FacturasDataContext())
+            {
+                dtc.Connection.Open();
+                dtc.Transaction = dtc.Connection.BeginTransaction();
+                using (DbTransaction tscope = dtc.Transaction)
+                {
+                    try
+                    {
+                        dtc.LoginCliente.InsertOnSubmit(loginBase);
+                        dtc.SubmitChanges();
+                        tscope.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        tscope.Rollback();
+                        dtc.Connection.Close();
+                        throw;
+                    }
+                }
+                dtc.Connection.Close();
+                return Ok(true);
+            }
+        }
+
+        #endregion
     }
 }

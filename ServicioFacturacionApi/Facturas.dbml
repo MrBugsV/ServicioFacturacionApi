@@ -78,6 +78,7 @@
       <Column Name="Postal" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
       <Column Name="Correo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="Cliente_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Cliente_Id" Type="FacturaCabecera" />
+      <Association Name="Cliente_LoginCliente" Member="LoginCliente" ThisKey="Cedula" OtherKey="Usuario" Type="LoginCliente" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.Empleado" Member="Empleado">
@@ -87,6 +88,7 @@
       <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Empleado_FacturaCabecera" Member="FacturaCabecera" ThisKey="Cedula" OtherKey="Empleado_id" Type="FacturaCabecera" />
+      <Association Name="Empleado_LoginEmpleado" Member="LoginEmpleado" ThisKey="Cedula" OtherKey="Usuario" Type="LoginEmpleado" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.FacturaCabecera" Member="FacturaCabecera">
@@ -102,6 +104,20 @@
       <Association Name="FacturaCabecera_FacturaDetalle" Member="FacturaDetalle" ThisKey="Id" OtherKey="Factura_Id" Type="FacturaDetalle" />
       <Association Name="Cliente_FacturaCabecera" Member="Cliente" ThisKey="Cliente_Id" OtherKey="Cedula" Type="Cliente" IsForeignKey="true" />
       <Association Name="Empleado_FacturaCabecera" Member="Empleado" ThisKey="Empleado_id" OtherKey="Cedula" Type="Empleado" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoginEmpleado" Member="LoginEmpleado">
+    <Type Name="LoginEmpleado">
+      <Column Name="Usuario" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Empleado_LoginEmpleado" Member="Empleado" ThisKey="Usuario" OtherKey="Cedula" Type="Empleado" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoginCliente" Member="LoginCliente">
+    <Type Name="LoginCliente">
+      <Column Name="Usuario" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Cliente_LoginCliente" Member="Cliente" ThisKey="Usuario" OtherKey="Cedula" Type="Cliente" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

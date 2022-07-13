@@ -48,6 +48,12 @@ namespace ServicioFacturacionApi
     partial void InsertFacturaCabecera(FacturaCabecera instance);
     partial void UpdateFacturaCabecera(FacturaCabecera instance);
     partial void DeleteFacturaCabecera(FacturaCabecera instance);
+    partial void InsertLoginEmpleado(LoginEmpleado instance);
+    partial void UpdateLoginEmpleado(LoginEmpleado instance);
+    partial void DeleteLoginEmpleado(LoginEmpleado instance);
+    partial void InsertLoginCliente(LoginCliente instance);
+    partial void UpdateLoginCliente(LoginCliente instance);
+    partial void DeleteLoginCliente(LoginCliente instance);
     #endregion
 		
 		public FacturasDataContext() : 
@@ -149,6 +155,22 @@ namespace ServicioFacturacionApi
 			get
 			{
 				return this.GetTable<FacturaCabecera>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LoginEmpleado> LoginEmpleado
+		{
+			get
+			{
+				return this.GetTable<LoginEmpleado>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LoginCliente> LoginCliente
+		{
+			get
+			{
+				return this.GetTable<LoginCliente>();
 			}
 		}
 	}
@@ -1275,6 +1297,8 @@ namespace ServicioFacturacionApi
 		
 		private EntitySet<FacturaCabecera> _FacturaCabecera;
 		
+		private EntityRef<LoginCliente> _LoginCliente;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1298,6 +1322,7 @@ namespace ServicioFacturacionApi
 		public Cliente()
 		{
 			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
+			this._LoginCliente = default(EntityRef<LoginCliente>);
 			OnCreated();
 		}
 		
@@ -1454,6 +1479,35 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cliente_LoginCliente", Storage="_LoginCliente", ThisKey="Cedula", OtherKey="Usuario", IsUnique=true, IsForeignKey=false)]
+		public LoginCliente LoginCliente
+		{
+			get
+			{
+				return this._LoginCliente.Entity;
+			}
+			set
+			{
+				LoginCliente previousValue = this._LoginCliente.Entity;
+				if (((previousValue != value) 
+							|| (this._LoginCliente.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LoginCliente.Entity = null;
+						previousValue.Cliente = null;
+					}
+					this._LoginCliente.Entity = value;
+					if ((value != null))
+					{
+						value.Cliente = this;
+					}
+					this.SendPropertyChanged("LoginCliente");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1503,6 +1557,8 @@ namespace ServicioFacturacionApi
 		
 		private EntitySet<FacturaCabecera> _FacturaCabecera;
 		
+		private EntityRef<LoginEmpleado> _LoginEmpleado;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1520,6 +1576,7 @@ namespace ServicioFacturacionApi
 		public Empleado()
 		{
 			this._FacturaCabecera = new EntitySet<FacturaCabecera>(new Action<FacturaCabecera>(this.attach_FacturaCabecera), new Action<FacturaCabecera>(this.detach_FacturaCabecera));
+			this._LoginEmpleado = default(EntityRef<LoginEmpleado>);
 			OnCreated();
 		}
 		
@@ -1613,6 +1670,35 @@ namespace ServicioFacturacionApi
 			set
 			{
 				this._FacturaCabecera.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Empleado_LoginEmpleado", Storage="_LoginEmpleado", ThisKey="Cedula", OtherKey="Usuario", IsUnique=true, IsForeignKey=false)]
+		public LoginEmpleado LoginEmpleado
+		{
+			get
+			{
+				return this._LoginEmpleado.Entity;
+			}
+			set
+			{
+				LoginEmpleado previousValue = this._LoginEmpleado.Entity;
+				if (((previousValue != value) 
+							|| (this._LoginEmpleado.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LoginEmpleado.Entity = null;
+						previousValue.Empleado = null;
+					}
+					this._LoginEmpleado.Entity = value;
+					if ((value != null))
+					{
+						value.Empleado = this;
+					}
+					this.SendPropertyChanged("LoginEmpleado");
+				}
 			}
 		}
 		
@@ -1986,6 +2072,260 @@ namespace ServicioFacturacionApi
 		{
 			this.SendPropertyChanging();
 			entity.FacturaCabecera = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LoginEmpleado")]
+	public partial class LoginEmpleado : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Usuario;
+		
+		private string _Contraseña;
+		
+		private EntityRef<Empleado> _Empleado;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUsuarioChanging(string value);
+    partial void OnUsuarioChanged();
+    partial void OnContraseñaChanging(string value);
+    partial void OnContraseñaChanged();
+    #endregion
+		
+		public LoginEmpleado()
+		{
+			this._Empleado = default(EntityRef<Empleado>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Usuario", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Usuario
+		{
+			get
+			{
+				return this._Usuario;
+			}
+			set
+			{
+				if ((this._Usuario != value))
+				{
+					if (this._Empleado.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._Usuario = value;
+					this.SendPropertyChanged("Usuario");
+					this.OnUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contraseña", DbType="NVarChar(50)")]
+		public string Contraseña
+		{
+			get
+			{
+				return this._Contraseña;
+			}
+			set
+			{
+				if ((this._Contraseña != value))
+				{
+					this.OnContraseñaChanging(value);
+					this.SendPropertyChanging();
+					this._Contraseña = value;
+					this.SendPropertyChanged("Contraseña");
+					this.OnContraseñaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Empleado_LoginEmpleado", Storage="_Empleado", ThisKey="Usuario", OtherKey="Cedula", IsForeignKey=true)]
+		public Empleado Empleado
+		{
+			get
+			{
+				return this._Empleado.Entity;
+			}
+			set
+			{
+				Empleado previousValue = this._Empleado.Entity;
+				if (((previousValue != value) 
+							|| (this._Empleado.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Empleado.Entity = null;
+						previousValue.LoginEmpleado = null;
+					}
+					this._Empleado.Entity = value;
+					if ((value != null))
+					{
+						value.LoginEmpleado = this;
+						this._Usuario = value.Cedula;
+					}
+					else
+					{
+						this._Usuario = default(string);
+					}
+					this.SendPropertyChanged("Empleado");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LoginCliente")]
+	public partial class LoginCliente : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Usuario;
+		
+		private string _Contraseña;
+		
+		private EntityRef<Cliente> _Cliente;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUsuarioChanging(string value);
+    partial void OnUsuarioChanged();
+    partial void OnContraseñaChanging(string value);
+    partial void OnContraseñaChanged();
+    #endregion
+		
+		public LoginCliente()
+		{
+			this._Cliente = default(EntityRef<Cliente>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Usuario", DbType="NVarChar(13) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Usuario
+		{
+			get
+			{
+				return this._Usuario;
+			}
+			set
+			{
+				if ((this._Usuario != value))
+				{
+					if (this._Cliente.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._Usuario = value;
+					this.SendPropertyChanged("Usuario");
+					this.OnUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contraseña", DbType="NVarChar(50)")]
+		public string Contraseña
+		{
+			get
+			{
+				return this._Contraseña;
+			}
+			set
+			{
+				if ((this._Contraseña != value))
+				{
+					this.OnContraseñaChanging(value);
+					this.SendPropertyChanging();
+					this._Contraseña = value;
+					this.SendPropertyChanged("Contraseña");
+					this.OnContraseñaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cliente_LoginCliente", Storage="_Cliente", ThisKey="Usuario", OtherKey="Cedula", IsForeignKey=true)]
+		public Cliente Cliente
+		{
+			get
+			{
+				return this._Cliente.Entity;
+			}
+			set
+			{
+				Cliente previousValue = this._Cliente.Entity;
+				if (((previousValue != value) 
+							|| (this._Cliente.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Cliente.Entity = null;
+						previousValue.LoginCliente = null;
+					}
+					this._Cliente.Entity = value;
+					if ((value != null))
+					{
+						value.LoginCliente = this;
+						this._Usuario = value.Cedula;
+					}
+					else
+					{
+						this._Usuario = default(string);
+					}
+					this.SendPropertyChanged("Cliente");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

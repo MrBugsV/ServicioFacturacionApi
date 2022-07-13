@@ -313,7 +313,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Entidades\CategoriaEntidad.cs" />
     <Compile Include="Entidades\ClienteEntidad.cs" />
     <Compile Include="Entidades\FacturaCabeceraEntidad.cs" />

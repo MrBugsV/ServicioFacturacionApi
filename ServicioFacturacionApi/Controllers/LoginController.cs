@@ -11,7 +11,7 @@ using System.Web.Http.Cors;
 namespace ServicioFacturacionApi.Controllers
 {
     [AllowAnonymous]
-    //[EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LoginController : ApiController
     {
 

@@ -88,24 +88,26 @@ namespace ServicioFacturacionApi.Controllers
 
         public bool verificarLoginCliente(LoginEntidad login, out LoginClienteEntidad loginCliente)
         {
-            LoginCliente cliente;
+            LoginCliente loginClienteBase;
             using (FacturasDataContext dtc = new FacturasDataContext())
             {
                 var resultado = from p in dtc.LoginCliente
                                 where p.Usuario == login.Usuario
                                     && p.Contraseña == login.Contraseña
                                 select p;
-                cliente = (LoginCliente)resultado.FirstOrDefault();
-            }
-            if (cliente != null)
-            {
-                loginCliente = new LoginClienteEntidad(
-                    cliente.Cliente.Nombre,
-                    cliente.Cliente.Apellido,
-                    cliente.Cliente.Correo,
-                    ""
-                );
-                return true;
+                loginClienteBase = (LoginCliente)resultado.FirstOrDefault();
+
+                if (loginClienteBase != null)
+                {
+                    var cliente = dtc.Cliente.Where(p => p.Cedula == loginClienteBase.Usuario).FirstOrDefault();
+                    loginCliente = new LoginClienteEntidad(
+                        cliente.Nombre,
+                        cliente.Apellido,
+                        cliente.Correo,
+                        ""
+                    );
+                    return true;
+                }
             }
             loginCliente = null;
             return false;

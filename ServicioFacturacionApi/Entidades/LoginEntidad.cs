@@ -24,4 +24,24 @@ namespace ServicioFacturacionApi.Entidades
             Contraseña = contraseña;
         }
     }
+
+    public class LoginClienteEntidad
+    {
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Correo { get; set; }
+        public string Token { get; set; }
+        public LoginClienteEntidad()
+        {
+
+        }
+
+        public LoginClienteEntidad(string nombre, string apellido, string correo, string token)
+        {
+            Nombre = nombre;
+            Apellido = apellido;
+            Correo = correo;
+            Token = token;
+        }
+    }
 }

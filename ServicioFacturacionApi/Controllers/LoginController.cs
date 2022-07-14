@@ -42,13 +42,14 @@ namespace ServicioFacturacionApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (verificarLoginCliente(login))
+            LoginClienteEntidad cliente;
+            if (verificarLoginCliente(login,out cliente))
             {
-                var token = TokenGenerator.GenerateTokenJwt(login.Usuario);
-                return Ok(token);
+                cliente.Token = TokenGenerator.GenerateTokenJwt(login.Usuario);
+                return Ok(cliente);
             }
             else
-                return Unauthorized();
+                return Unauthorized(null);
         }
 
         [HttpPost]
@@ -85,18 +86,29 @@ namespace ServicioFacturacionApi.Controllers
             return empleado != null;
         }
 
-        public bool verificarLoginCliente(LoginEntidad login)
+        public bool verificarLoginCliente(LoginEntidad login, out LoginClienteEntidad loginCliente)
         {
-            LoginCliente empleado;
+            LoginCliente cliente;
             using (FacturasDataContext dtc = new FacturasDataContext())
             {
                 var resultado = from p in dtc.LoginCliente
                                 where p.Usuario == login.Usuario
                                     && p.Contraseña == login.Contraseña
                                 select p;
-                empleado = (LoginCliente)resultado.FirstOrDefault();
+                cliente = (LoginCliente)resultado.FirstOrDefault();
             }
-            return empleado != null;
+            if (cliente != null)
+            {
+                loginCliente = new LoginClienteEntidad(
+                    cliente.Cliente.Nombre,
+                    cliente.Cliente.Apellido,
+                    cliente.Cliente.Correo,
+                    ""
+                );
+                return true;
+            }
+            loginCliente = null;
+            return false;
         }
 
         public IHttpActionResult registrarLoginEmpleado(LoginEntidad login)

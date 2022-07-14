@@ -8,7 +8,7 @@ using System.Data.Common;
 
 namespace ServicioFacturacionApi.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FacturaController : ApiController
     {
         #region Servicios REST

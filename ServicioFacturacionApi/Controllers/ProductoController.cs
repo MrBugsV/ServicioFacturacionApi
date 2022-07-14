@@ -9,7 +9,7 @@ using System.IO;
 
 namespace ServicioFacturacionApi.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductoController : ApiController
     {
         #region Servicios REST

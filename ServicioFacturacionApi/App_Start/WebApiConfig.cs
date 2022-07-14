@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using ServicioFacturacionApi.Controllers;
 
 namespace ServicioFacturacionApi
@@ -11,7 +12,8 @@ namespace ServicioFacturacionApi
         public static void Register(HttpConfiguration config)
         {
             // Configuración y servicios de API web
-            config.EnableCors();
+            var cors = new EnableCorsAttribute("*","*","*");
+            config.EnableCors(cors);
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 

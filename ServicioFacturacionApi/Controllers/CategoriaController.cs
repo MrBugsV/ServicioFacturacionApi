@@ -10,7 +10,7 @@ namespace ServicioFacturacionApi.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CategoriaController : ApiController
     {
-        //Esto es un comentario
+        //Comentario
         #region Servicios REST
 
         // GET api/Categoria

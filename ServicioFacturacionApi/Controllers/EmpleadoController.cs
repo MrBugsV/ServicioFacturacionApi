@@ -7,6 +7,8 @@ using ServicioFacturacionApi.Entidades;
 
 namespace ServicioFacturacionApi.Controllers
 {
+    [Authorize]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EmpleadoController : ApiController
     {
         [HttpPost]

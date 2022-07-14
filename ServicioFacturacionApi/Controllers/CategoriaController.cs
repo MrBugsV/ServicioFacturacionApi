@@ -7,6 +7,7 @@ using System.Web.Http.Cors;
 
 namespace ServicioFacturacionApi.Controllers
 {
+    [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CategoriaController : ApiController
     {

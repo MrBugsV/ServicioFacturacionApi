@@ -1,10 +1,7 @@
 ﻿using ServicioFacturacionApi.Entidades;
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -12,30 +9,29 @@ namespace ServicioFacturacionApi.Controllers
 {
     [AllowAnonymous]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class LoginController : ApiController
+    public class LoginClienteController : ApiController
     {
-
         #region Servicios REST
+        // GET: api/LoginCliente
+        //public string Get()
+        //{
+        //    return "";
+        //}
 
-        [HttpPost]
-        [Route("api/LoginEmpleado")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult loginEmpleado(LoginEntidad login)
+        //// GET: api/LoginCliente/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
+        // POST: api/LoginCliente
+        public IHttpActionResult Post([FromBody] LoginEntidad login)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            if (verificarLoginEmpleado(login))
-            {
-                var token = TokenGenerator.GenerateTokenJwt(login.Usuario);
-                return Ok(token);
-            }
-            else
-                return Unauthorized();
+            return insertarLoginCliente(login);
         }
 
         [HttpPost]
-        [Route("api/LoginCliente")]
+        [Route("api/LoginCliente/Login")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult loginCliente(LoginEntidad login)
         {
@@ -43,7 +39,7 @@ namespace ServicioFacturacionApi.Controllers
                 return BadRequest(ModelState);
 
             LoginClienteEntidad cliente;
-            if (verificarLoginCliente(login,out cliente))
+            if (verificarLoginCliente(login, out cliente))
             {
                 cliente.Token = TokenGenerator.GenerateTokenJwt(login.Usuario);
                 return Ok(cliente);
@@ -52,41 +48,22 @@ namespace ServicioFacturacionApi.Controllers
                 return Unauthorized(null);
         }
 
-        [HttpPost]
-        [Route("api/RegistrarEmpleado")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult registrarEmpleado(LoginEntidad login)
+        // PUT: api/LoginCliente
+        public IHttpActionResult Put(LoginEntidad login)
         {
-            return registrarLoginEmpleado(login);
+            return actualizarLoginCliente(login);
         }
 
-        [HttpPost]
-        [Route("api/RegistrarCliente")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IHttpActionResult registrarCliente(LoginEntidad login)
-        {
-            return registrarLoginCliente(login);
-        }
+        //// DELETE: api/LoginCliente/5
+        //public void Delete(int id)
+        //{
+        //}
 
         #endregion
 
         #region Métodos Base de Datos
 
-        public bool verificarLoginEmpleado(LoginEntidad login)
-        {
-            LoginEmpleado empleado;
-            using (FacturasDataContext dtc = new FacturasDataContext())
-            {
-                var resultado = from p in dtc.LoginEmpleado
-                                where p.Usuario == login.Usuario
-                                    && p.Contraseña == login.Contraseña
-                                select p;
-                empleado = (LoginEmpleado)resultado.FirstOrDefault();
-            }
-            return empleado != null;
-        }
-
-        public bool verificarLoginCliente(LoginEntidad login, out LoginClienteEntidad loginCliente)
+        private bool verificarLoginCliente(LoginEntidad login, out LoginClienteEntidad loginCliente)
         {
             LoginCliente loginClienteBase;
             using (FacturasDataContext dtc = new FacturasDataContext())
@@ -113,37 +90,7 @@ namespace ServicioFacturacionApi.Controllers
             return false;
         }
 
-        public IHttpActionResult registrarLoginEmpleado(LoginEntidad login)
-        {
-            LoginEmpleado loginBase = new LoginEmpleado();
-            loginBase.Usuario = login.Usuario;
-            loginBase.Contraseña = login.Contraseña;
-
-            using (FacturasDataContext dtc = new FacturasDataContext())
-            {
-                dtc.Connection.Open();
-                dtc.Transaction = dtc.Connection.BeginTransaction();
-                using (DbTransaction tscope = dtc.Transaction)
-                {
-                    try
-                    {
-                        dtc.LoginEmpleado.InsertOnSubmit(loginBase);
-                        dtc.SubmitChanges();
-                        tscope.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        tscope.Rollback();
-                        dtc.Connection.Close();
-                        throw;
-                    }
-                }
-                dtc.Connection.Close();
-                return Ok(true);
-            }
-        }
-
-        public IHttpActionResult registrarLoginCliente(LoginEntidad login)
+        private IHttpActionResult insertarLoginCliente(LoginEntidad login)
         {
             LoginCliente loginBase = new LoginCliente();
             loginBase.Usuario = login.Usuario;
@@ -173,6 +120,44 @@ namespace ServicioFacturacionApi.Controllers
             }
         }
 
+        private IHttpActionResult actualizarLoginCliente(LoginEntidad login)
+        {
+            LoginCliente loginBase;
+
+            using (FacturasDataContext dtc = new FacturasDataContext())
+            {
+                dtc.Connection.Open();
+                dtc.Transaction = dtc.Connection.BeginTransaction();
+                using (DbTransaction tscope = dtc.Transaction)
+                {
+                    try
+                    {
+                        var resultado = from p in dtc.LoginCliente
+                                        where p.Usuario == login.Usuario
+                                        select p;
+
+                        loginBase = (LoginCliente)resultado.First();
+
+                        if (loginBase.Contraseña != login.Contraseña)
+                            loginBase.Contraseña = login.Contraseña;
+
+
+                        dtc.SubmitChanges();
+                        tscope.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        tscope.Rollback();
+                        dtc.Connection.Close();
+                        throw;
+                    }
+                }
+                dtc.Connection.Close();
+                return Ok(true);
+            }
+        }
+
         #endregion
+
     }
 }

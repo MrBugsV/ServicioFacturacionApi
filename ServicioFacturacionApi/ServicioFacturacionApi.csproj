@@ -320,7 +320,7 @@
     <Compile Include="Entidades\FacturaDetalleEntidad.cs" />
     <Compile Include="Entidades\LoginEntidad.cs" />
     <Compile Include="Entidades\ProductoEntidad.cs" />
-    <Compile Include="Entidades\UsuarioEntidad.cs" />
+    <Compile Include="Entidades\EmpleadoEntidad.cs" />
     <Compile Include="Facturas.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -160,6 +160,7 @@ namespace ServicioFacturacionApi.Controllers
                 {
                     var resultado = from p in dtc.vProductos
                                     where p.NombreProducto.Contains(producto) && p.NombreCategoria.Contains(categoria)
+                                    where p.Stock>0
                                     orderby p.NombreCategoria, p.NombreProducto
                                     select p;
                     return resultado.Count();
@@ -181,6 +182,7 @@ namespace ServicioFacturacionApi.Controllers
                 {
                     var resultado = from p in dtc.vProductos
                                     where p.NombreProducto.Contains(producto) && p.NombreCategoria.Contains(categoria)
+                                    where p.Stock > 0
                                     orderby p.NombreCategoria, p.NombreProducto
                                     select p;
                     productos = resultado.Skip(cantidad * (pagina - 1)).Take(cantidad).ToList();

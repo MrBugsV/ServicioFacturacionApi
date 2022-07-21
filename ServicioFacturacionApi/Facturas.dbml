@@ -53,21 +53,6 @@
       <Column Name="IdProducto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.vFacturasCabecera" Member="vFacturasCabecera">
-    <Type Name="vFacturasCabecera">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Cliente_Id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Iva" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
-      <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Cliente" Member="Cliente">
     <Type Name="Cliente">
       <Column Name="Cedula" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -118,6 +103,40 @@
       <Column Name="Usuario" Type="System.String" DbType="NVarChar(13) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="Cliente_LoginCliente" Member="Cliente" ThisKey="Usuario" OtherKey="Cedula" Type="Cliente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vFacturasCabecera" Member="vFacturasCabecera">
+    <Type Name="vFacturasCabecera">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cliente_Id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Iva" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Empleado_id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vFacturasCabeceraEmpleados" Member="vFacturasCabeceraEmpleados">
+    <Type Name="vFacturasCabeceraEmpleados">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cliente_Id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="Empleado_id" Type="System.String" DbType="NVarChar(13)" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Subtotal" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Iva" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Anulado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NombreCliente" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApellidoCliente" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NombreEmpleado" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApellidoEmpleado" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

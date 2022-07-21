@@ -60,6 +60,31 @@ namespace ServicioFacturacionApi.Controllers
         }
 
         [HttpGet]
+        [Route("api/Factura/CantidadEmpleados/{facturaId?}/{idCliente?}/{idEmpleado?}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public int GetCountEmpleados(string facturaId = "", string idCliente = "", string idEmpleado = "")
+        {
+            if (facturaId == null)
+                facturaId = "";
+            if (idCliente == null)
+                idCliente = "";
+            return obtenerCantidadEmpleados(facturaId, idCliente, idEmpleado);
+        }
+
+
+        [HttpGet]
+        [Route("api/Factura/PaginacionEmpleados/{pagina}/{cantidad}/{facturaId?}/{idCliente?}/{idEmpleado?}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public List<vFacturasCabeceraEntidad> GetEmpleadosFiltro(int pagina, int cantidad, string facturaId = "", string idCliente = "", string idEmpleado = "")
+        {
+            if (facturaId == null)
+                facturaId = "";
+            if (idCliente == null)
+                idCliente = "";
+            return obtenerListaFiltradaEmpleados(pagina, cantidad, facturaId, idCliente, idEmpleado);
+        }
+
+        [HttpGet]
         [Route("api/Factura/Fecha")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public DateTime GetFecha()
@@ -103,6 +128,15 @@ namespace ServicioFacturacionApi.Controllers
 
                 foreach (vFacturasCabecera item in facturasCabecera)
                 {
+                    Empleado empleado;
+                    using (FacturasDataContext dtc = new FacturasDataContext())
+                    {
+                        var resultado = from p in dtc.Empleado
+                                        where p.Cedula == item.Empleado_id
+                                        select p;
+                        empleado = resultado.FirstOrDefault();
+                    }
+                    if (empleado == null) empleado = new Empleado();
                     facturaCabeceraEntidad.Add(new vFacturasCabeceraEntidad(
                             item.Id,
                             item.Cliente_Id,
@@ -110,6 +144,9 @@ namespace ServicioFacturacionApi.Controllers
                             item.Apellido,
                             item.Direccion,
                             item.Telefono,
+                            empleado.Cedula,
+                            empleado.Nombre,
+                            empleado.Apellido,
                             (DateTime)item.Fecha,
                             (decimal)item.Subtotal,
                             (decimal)item.Iva,
@@ -167,6 +204,15 @@ namespace ServicioFacturacionApi.Controllers
                             );
                     }
 
+                    Empleado empleado;
+                    using (FacturasDataContext dtc = new FacturasDataContext())
+                    {
+                        var resultado = from p in dtc.Empleado
+                                        where p.Cedula == facturaCabecera.Empleado_id
+                                        select p;
+                        empleado = resultado.FirstOrDefault();
+                    }
+                    if (empleado == null) empleado = new Empleado();
                     facturaCabeceraEntidad = new vFacturasCabeceraEntidad(
                         facturaCabecera.Id,
                         facturaCabecera.Cliente_Id,
@@ -174,6 +220,9 @@ namespace ServicioFacturacionApi.Controllers
                         facturaCabecera.Apellido,
                         facturaCabecera.Direccion,
                         facturaCabecera.Telefono,
+                        empleado.Cedula,
+                        empleado.Nombre,
+                        empleado.Apellido,
                         (DateTime)facturaCabecera.Fecha,
                         (decimal)facturaCabecera.Subtotal,
                         (decimal)facturaCabecera.Iva,
@@ -223,7 +272,6 @@ namespace ServicioFacturacionApi.Controllers
         {
             try
             {
-                List<Cliente> clientes = new List<Cliente>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
                     var resultado = from p in dtc.vFacturasCabecera
@@ -244,20 +292,29 @@ namespace ServicioFacturacionApi.Controllers
         {
             try
             {
-                List<vFacturasCabecera> clientes = new List<vFacturasCabecera>();
+                List<vFacturasCabecera> facturas = new List<vFacturasCabecera>();
                 using (FacturasDataContext dtc = new FacturasDataContext())
                 {
                     var resultado = from p in dtc.vFacturasCabecera
                                     where p.Id.ToString().Contains(facturaId) && p.Cliente_Id.Contains(cedula)
                                     orderby p.Id, p.Cliente_Id
                                     select p;
-                    clientes = resultado.Skip(cantidad * (pagina - 1)).Take(cantidad).ToList();
+                    facturas = resultado.Skip(cantidad * (pagina - 1)).Take(cantidad).ToList();
                 }
 
                 List<vFacturasCabeceraEntidad> facturaEntidad = new List<vFacturasCabeceraEntidad>();
 
-                foreach (vFacturasCabecera item in clientes)
+                foreach (vFacturasCabecera item in facturas)
                 {
+                    Empleado empleado;
+                    using (FacturasDataContext dtc = new FacturasDataContext())
+                    {
+                        var resultado = from p in dtc.Empleado
+                                        where p.Cedula == item.Empleado_id
+                                        select p;
+                        empleado = resultado.FirstOrDefault();
+                    }
+                    if (empleado == null) empleado = new Empleado();
                     facturaEntidad.Add(new vFacturasCabeceraEntidad(
                             item.Id,
                             item.Cliente_Id,
@@ -265,6 +322,119 @@ namespace ServicioFacturacionApi.Controllers
                             item.Apellido,
                             item.Direccion,
                             item.Telefono,
+                            empleado.Cedula,
+                            empleado.Nombre,
+                            empleado.Apellido,
+                            (DateTime)item.Fecha,
+                            (decimal)item.Subtotal,
+                            (decimal)item.Iva,
+                            (decimal)item.Total,
+                            (bool)item.Anulado,
+                            null));
+                }
+
+
+                return facturaEntidad;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private int obtenerCantidadEmpleados(string facturaId, string idCliente, string idEmpleado)
+        {
+            try
+            {
+                using (FacturasDataContext dtc = new FacturasDataContext())
+                {
+                    IOrderedQueryable<vFacturasCabecera> resultado;
+                    if (idEmpleado.Equals("") || idEmpleado.Equals(" "))
+                    {
+                        resultado = from p in dtc.vFacturasCabecera
+                                    where p.Id.ToString().Contains(facturaId) && p.Cliente_Id.Contains(idCliente)
+                                    orderby p.Id, p.Cliente_Id
+                                    select p;
+                    }
+                    else
+                    {
+                        resultado = from p in dtc.vFacturasCabecera
+                                    where p.Id.ToString().Contains(facturaId) && p.Cliente_Id.Contains(idCliente) && p.Empleado_id.Contains(idEmpleado)
+                                    orderby p.Id, p.Cliente_Id
+                                    select p;
+                    }
+
+                    return resultado.Count();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private List<vFacturasCabeceraEntidad> obtenerListaFiltradaEmpleados(int pagina, int cantidad, string facturaId, string idCliente, string idEmpleado)
+        {
+            try
+            {
+                List<vFacturasCabecera> facturas = new List<vFacturasCabecera>();
+                using (FacturasDataContext dtc = new FacturasDataContext())
+                {
+                    IOrderedQueryable<vFacturasCabecera> resultado;
+                    if (idEmpleado.Equals("")||idEmpleado.Equals(" "))
+                    {
+                        resultado = from p in dtc.vFacturasCabecera
+                                    where p.Id.ToString().Contains(facturaId) && p.Cliente_Id.Contains(idCliente)
+                                    orderby p.Id, p.Cliente_Id
+                                    select p;
+                    }
+                    else
+                    {
+                        resultado = from p in dtc.vFacturasCabecera
+                                    where p.Id.ToString().Contains(facturaId) && p.Cliente_Id.Contains(idCliente) && p.Empleado_id.Contains(idEmpleado)
+                                    orderby p.Id, p.Cliente_Id
+                                    select p;
+                    }
+
+                    facturas = resultado.Skip(cantidad * (pagina - 1)).Take(cantidad).ToList();
+                }
+
+                List<vFacturasCabeceraEntidad> facturaEntidad = new List<vFacturasCabeceraEntidad>();
+
+                foreach (vFacturasCabecera item in facturas)
+                {
+                    Empleado empleado;
+                    using (FacturasDataContext dtc = new FacturasDataContext())
+                    {
+                        var resultado = from p in dtc.Empleado
+                                        where p.Cedula == item.Empleado_id
+                                        select p;
+                        empleado = resultado.FirstOrDefault();
+                    }
+
+                    EmpleadoEntidad empleadoEntidad;
+                    if (empleado != null)
+                        empleadoEntidad = new EmpleadoEntidad(
+                            empleado.Cedula,
+                            empleado.Nombre,
+                            empleado.Apellido,
+                            (bool)empleado.Admin
+                            );
+                    else
+                        empleadoEntidad = new EmpleadoEntidad();
+
+                    facturaEntidad.Add(new vFacturasCabeceraEntidad(
+                            item.Id,
+                            item.Cliente_Id,
+                            item.Nombre,
+                            item.Apellido,
+                            item.Direccion,
+                            item.Telefono,
+                            empleadoEntidad.Cedula,
+                            empleadoEntidad.Nombre,
+                            empleadoEntidad.Apellido,
                             (DateTime)item.Fecha,
                             (decimal)item.Subtotal,
                             (decimal)item.Iva,
@@ -287,6 +457,7 @@ namespace ServicioFacturacionApi.Controllers
         {
             FacturaCabecera facturaCabeceraBase = new FacturaCabecera();
             facturaCabeceraBase.Cliente_Id = facturaCabecera.IdCliente;
+            facturaCabeceraBase.Empleado_id = facturaCabecera.IdEmpleado;
             facturaCabeceraBase.Fecha = facturaCabecera.Fecha;
             facturaCabeceraBase.Subtotal = facturaCabecera.Subtotal;
             facturaCabeceraBase.Iva = facturaCabecera.Iva;

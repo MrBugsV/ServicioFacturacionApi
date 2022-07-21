@@ -14,7 +14,10 @@ namespace ServicioFacturacionApi.Entidades
 
         public EmpleadoEntidad()
         {
-
+            Cedula = "";
+            Nombre = "";
+            Apellido = "";
+            Admin = false;
         }
 
         public EmpleadoEntidad(string cedula, string nombre, string apellido, bool admin)

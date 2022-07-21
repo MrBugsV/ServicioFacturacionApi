@@ -20,7 +20,7 @@
         <elementListCompartment Id="0fc0b48d-1ddd-41ed-a235-9dfe5da89601" absoluteBounds="12.015, 4.8350000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12 : 5.73159912109375); (11 : 5.73159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(12 : 5.82615397135417); (11 : 5.82615397135417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/FacturasDataContext/Producto/Producto_FacturaDetalle" />
       <nodes>
         <classShapeMoniker Id="c8fdc589-d84d-470f-8ffd-71e1ed7631cc" />
@@ -44,12 +44,6 @@
       <DataClassMoniker Name="/FacturasDataContext/vFacturasDetalle" />
       <nestedChildShapes>
         <elementListCompartment Id="ff69750c-4293-416c-9157-d820b738a0f7" absoluteBounds="8.515, 1.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="eccbbd6a-ff09-42a9-a2ad-63015b5079e1" absoluteBounds="6, 1, 2, 2.9247054036458331">
-      <DataClassMoniker Name="/FacturasDataContext/vFacturasCabecera" />
-      <nestedChildShapes>
-        <elementListCompartment Id="25ad872d-1d64-40a3-8be9-ab36fc496d44" absoluteBounds="6.015, 1.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="faeaf3fc-e303-4e3c-b6e9-c0e52b15e246" absoluteBounds="3.5, 4.875, 2, 2.1554996744791666">
@@ -103,19 +97,31 @@
         <elementListCompartment Id="6113b96a-b1e3-4b70-9993-bfc5a532158d" absoluteBounds="0.63999999999999968, 5.4600000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.5 : 8.97199625651042); (8.25 : 8.97199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.5 : 8.97199625651042); (8.25 : 8.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FacturasDataContext/Empleado/Empleado_LoginEmpleado" />
       <nodes>
         <classShapeMoniker Id="2207a951-8e73-448a-87b2-0cb96d605065" />
         <classShapeMoniker Id="aa126467-989c-4e9a-92d2-8c73c4818f84" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.5 : 5.59699625651042); (2.625 : 5.59699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.5 : 5.59699625651042); (2.625 : 5.59699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FacturasDataContext/Cliente/Cliente_LoginCliente" />
       <nodes>
         <classShapeMoniker Id="faeaf3fc-e303-4e3c-b6e9-c0e52b15e246" />
         <classShapeMoniker Id="6ea7b31d-c1be-4ed9-9af5-8fb5871f594e" />
       </nodes>
     </associationConnector>
+    <classShape Id="495fc46e-3233-4802-938a-7d5271bcf645" absoluteBounds="6.125, 0.875, 2, 3.1170068359375">
+      <DataClassMoniker Name="/FacturasDataContext/vFacturasCabecera" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2b8e5bfa-05a8-4506-98bd-de9fd2ac8749" absoluteBounds="6.14, 1.335, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="13e7cc4f-be40-4339-aaea-21e21b45345a" absoluteBounds="11.125, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/FacturasDataContext/vFacturasCabeceraEmpleados" />
+      <nestedChildShapes>
+        <elementListCompartment Id="03a72d91-456d-4f98-a969-8d62b3dea8a9" absoluteBounds="11.14, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

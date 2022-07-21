@@ -195,7 +195,7 @@ namespace ServicioFacturacionApi.Controllers
                         item.NombreProducto,
                         (decimal)item.Precio,
                         (decimal)item.Stock,
-                        item.Imagen,
+                        null,
                         (int)item.Categoria_Id,
                         item.NombreCategoria));
                 }

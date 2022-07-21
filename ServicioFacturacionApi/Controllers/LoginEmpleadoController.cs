@@ -48,11 +48,13 @@ namespace ServicioFacturacionApi.Controllers
             else
                 return Unauthorized();
         }
-
         // PUT: api/LoginEmpleado
-        public IHttpActionResult Put(LoginEntidad login)
+        [HttpPut]
+        [Route("api/LoginEmpleado/{passwordNueva}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IHttpActionResult Put(string passwordNueva,LoginEntidad login)
         {
-            return actualizarLoginEmpleado(login);
+            return actualizarLoginEmpleado(passwordNueva,login);
         }
 
 
@@ -109,7 +111,7 @@ namespace ServicioFacturacionApi.Controllers
             return empleado != null;
         }
 
-        private IHttpActionResult actualizarLoginEmpleado(LoginEntidad login)
+        private IHttpActionResult actualizarLoginEmpleado(string passwordNueva,LoginEntidad login)
         {
             LoginEmpleado loginBase;
             using (FacturasDataContext dtc = new FacturasDataContext())
@@ -121,13 +123,19 @@ namespace ServicioFacturacionApi.Controllers
                     try
                     {
                         var resultado = from p in dtc.LoginEmpleado
-                                        where p.Usuario == login.Usuario
+                                        where p.Usuario == login.Usuario && p.Contraseña == login.Contraseña
                                         select p;
 
-                        loginBase = (LoginEmpleado)resultado.First();
+                        loginBase = (LoginEmpleado)resultado.FirstOrDefault();
 
-                        if (loginBase.Contraseña != login.Contraseña)
-                            loginBase.Contraseña = login.Contraseña;
+                        if (loginBase == null)
+                        {
+                            dtc.Connection.Close();
+                            return Ok(false);
+                        }
+
+                        if (loginBase.Contraseña != passwordNueva)
+                            loginBase.Contraseña = passwordNueva;
 
                         dtc.SubmitChanges();
                         tscope.Commit();

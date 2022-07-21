@@ -9,6 +9,7 @@ namespace ServicioFacturacionApi.Entidades
     {
         public int Id { get; set; }
         public string IdCliente { get; set; }
+        public string IdEmpleado { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Iva { get; set; }
@@ -21,6 +22,7 @@ namespace ServicioFacturacionApi.Entidades
         {
             Id = 0;
             IdCliente = "";
+            IdEmpleado = "";
             Fecha = new DateTime();
             Subtotal = 0;
             Iva = 0;
@@ -30,16 +32,18 @@ namespace ServicioFacturacionApi.Entidades
             DetallesFactura = new List<FacturaDetalleEntidad>();
         }
 
-        public FacturaCabeceraEntidad(int id, string idCliente, DateTime fecha, decimal subtotal, decimal iva, decimal total, string usuarioId, bool anulado)
+        public FacturaCabeceraEntidad(int id, string idCliente, string idEmpleado, DateTime fecha, decimal subtotal, decimal iva, decimal total, string usuarioId, bool anulado, List<FacturaDetalleEntidad> detallesFactura)
         {
             Id = id;
             IdCliente = idCliente;
+            IdEmpleado = idEmpleado;
             Fecha = fecha;
             Subtotal = subtotal;
             Iva = iva;
             Total = total;
             UsuarioId = usuarioId;
             Anulado = anulado;
+            DetallesFactura = detallesFactura;
         }
     }
 
@@ -47,10 +51,13 @@ namespace ServicioFacturacionApi.Entidades
     {
         public int Id { get; set; }
         public string IdCliente { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+        public string NombreCliente { get; set; }
+        public string ApellidoCliente { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
+        public string IdEmpleado { get; set; }
+        public string NombreEmpleado { get; set; }
+        public string ApellidoEmpleado { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Iva { get; set; }
@@ -62,8 +69,8 @@ namespace ServicioFacturacionApi.Entidades
         {
             Id = 0;
             IdCliente = "";
-            Nombre = "";
-            Apellido = "";
+            NombreCliente = "";
+            ApellidoCliente = "";
             Direccion = "";
             Telefono = "";
             Fecha = new DateTime();
@@ -74,14 +81,17 @@ namespace ServicioFacturacionApi.Entidades
             DetallesFactura = new List<vFacturasDetalleEntidad>();
         }
 
-        public vFacturasCabeceraEntidad(int id, string idCliente, string nombre, string apellido, string direccion, string telefono, DateTime fecha, decimal subtotal, decimal iva, decimal total, bool anulado, List<vFacturasDetalleEntidad> detallesFactura)
+        public vFacturasCabeceraEntidad(int id, string idCliente, string nombreCliente, string apellidoCliente, string direccion, string telefono, string idEmpleado, string nombreEmpleado, string apellidoEmpleado, DateTime fecha, decimal subtotal, decimal iva, decimal total, bool anulado, List<vFacturasDetalleEntidad> detallesFactura)
         {
             Id = id;
             IdCliente = idCliente;
-            Nombre = nombre;
-            Apellido = apellido;
+            NombreCliente = nombreCliente;
+            ApellidoCliente = apellidoCliente;
             Direccion = direccion;
             Telefono = telefono;
+            IdEmpleado = idEmpleado;
+            NombreEmpleado = nombreEmpleado;
+            ApellidoEmpleado = apellidoEmpleado;
             Fecha = fecha;
             Subtotal = subtotal;
             Iva = iva;

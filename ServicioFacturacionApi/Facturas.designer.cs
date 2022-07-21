@@ -126,14 +126,6 @@ namespace ServicioFacturacionApi
 			}
 		}
 		
-		public System.Data.Linq.Table<vFacturasCabecera> vFacturasCabecera
-		{
-			get
-			{
-				return this.GetTable<vFacturasCabecera>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Cliente> Cliente
 		{
 			get
@@ -171,6 +163,22 @@ namespace ServicioFacturacionApi
 			get
 			{
 				return this.GetTable<LoginCliente>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vFacturasCabecera> vFacturasCabecera
+		{
+			get
+			{
+				return this.GetTable<vFacturasCabecera>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vFacturasCabeceraEmpleados> vFacturasCabeceraEmpleados
+		{
+			get
+			{
+				return this.GetTable<vFacturasCabeceraEmpleados>();
 			}
 		}
 	}
@@ -1063,213 +1071,6 @@ namespace ServicioFacturacionApi
 				if ((this._IdProducto != value))
 				{
 					this._IdProducto = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vFacturasCabecera")]
-	public partial class vFacturasCabecera
-	{
-		
-		private int _Id;
-		
-		private string _Cliente_Id;
-		
-		private System.Nullable<System.DateTime> _Fecha;
-		
-		private System.Nullable<decimal> _Subtotal;
-		
-		private System.Nullable<decimal> _Iva;
-		
-		private System.Nullable<decimal> _Total;
-		
-		private string _Telefono;
-		
-		private string _Direccion;
-		
-		private System.Nullable<bool> _Anulado;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		public vFacturasCabecera()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cliente_Id", DbType="NVarChar(13)")]
-		public string Cliente_Id
-		{
-			get
-			{
-				return this._Cliente_Id;
-			}
-			set
-			{
-				if ((this._Cliente_Id != value))
-				{
-					this._Cliente_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
-		public System.Nullable<System.DateTime> Fecha
-		{
-			get
-			{
-				return this._Fecha;
-			}
-			set
-			{
-				if ((this._Fecha != value))
-				{
-					this._Fecha = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtotal", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Subtotal
-		{
-			get
-			{
-				return this._Subtotal;
-			}
-			set
-			{
-				if ((this._Subtotal != value))
-				{
-					this._Subtotal = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Iva", DbType="Decimal(3,0)")]
-		public System.Nullable<decimal> Iva
-		{
-			get
-			{
-				return this._Iva;
-			}
-			set
-			{
-				if ((this._Iva != value))
-				{
-					this._Iva = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(10,2)")]
-		public System.Nullable<decimal> Total
-		{
-			get
-			{
-				return this._Total;
-			}
-			set
-			{
-				if ((this._Total != value))
-				{
-					this._Total = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
-		public string Telefono
-		{
-			get
-			{
-				return this._Telefono;
-			}
-			set
-			{
-				if ((this._Telefono != value))
-				{
-					this._Telefono = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
-		public string Direccion
-		{
-			get
-			{
-				return this._Direccion;
-			}
-			set
-			{
-				if ((this._Direccion != value))
-				{
-					this._Direccion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Anulado", DbType="Bit")]
-		public System.Nullable<bool> Anulado
-		{
-			get
-			{
-				return this._Anulado;
-			}
-			set
-			{
-				if ((this._Anulado != value))
-				{
-					this._Anulado = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
 				}
 			}
 		}
@@ -2325,6 +2126,492 @@ namespace ServicioFacturacionApi
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vFacturasCabecera")]
+	public partial class vFacturasCabecera
+	{
+		
+		private int _Id;
+		
+		private string _Cliente_Id;
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		private System.Nullable<decimal> _Subtotal;
+		
+		private System.Nullable<decimal> _Iva;
+		
+		private System.Nullable<decimal> _Total;
+		
+		private string _Telefono;
+		
+		private string _Direccion;
+		
+		private System.Nullable<bool> _Anulado;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private string _Empleado_id;
+		
+		public vFacturasCabecera()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cliente_Id", DbType="NVarChar(13)")]
+		public string Cliente_Id
+		{
+			get
+			{
+				return this._Cliente_Id;
+			}
+			set
+			{
+				if ((this._Cliente_Id != value))
+				{
+					this._Cliente_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtotal", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Subtotal
+		{
+			get
+			{
+				return this._Subtotal;
+			}
+			set
+			{
+				if ((this._Subtotal != value))
+				{
+					this._Subtotal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Iva", DbType="Decimal(3,0)")]
+		public System.Nullable<decimal> Iva
+		{
+			get
+			{
+				return this._Iva;
+			}
+			set
+			{
+				if ((this._Iva != value))
+				{
+					this._Iva = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
+		public string Telefono
+		{
+			get
+			{
+				return this._Telefono;
+			}
+			set
+			{
+				if ((this._Telefono != value))
+				{
+					this._Telefono = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
+		public string Direccion
+		{
+			get
+			{
+				return this._Direccion;
+			}
+			set
+			{
+				if ((this._Direccion != value))
+				{
+					this._Direccion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Anulado", DbType="Bit")]
+		public System.Nullable<bool> Anulado
+		{
+			get
+			{
+				return this._Anulado;
+			}
+			set
+			{
+				if ((this._Anulado != value))
+				{
+					this._Anulado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(50)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="NVarChar(50)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Empleado_id", DbType="NVarChar(13)")]
+		public string Empleado_id
+		{
+			get
+			{
+				return this._Empleado_id;
+			}
+			set
+			{
+				if ((this._Empleado_id != value))
+				{
+					this._Empleado_id = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vFacturasCabeceraEmpleados")]
+	public partial class vFacturasCabeceraEmpleados
+	{
+		
+		private int _Id;
+		
+		private string _Cliente_Id;
+		
+		private string _Empleado_id;
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		private System.Nullable<decimal> _Subtotal;
+		
+		private System.Nullable<decimal> _Iva;
+		
+		private System.Nullable<decimal> _Total;
+		
+		private System.Nullable<bool> _Anulado;
+		
+		private string _NombreCliente;
+		
+		private string _ApellidoCliente;
+		
+		private string _NombreEmpleado;
+		
+		private string _ApellidoEmpleado;
+		
+		private string _Telefono;
+		
+		private string _Direccion;
+		
+		public vFacturasCabeceraEmpleados()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cliente_Id", DbType="NVarChar(13)")]
+		public string Cliente_Id
+		{
+			get
+			{
+				return this._Cliente_Id;
+			}
+			set
+			{
+				if ((this._Cliente_Id != value))
+				{
+					this._Cliente_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Empleado_id", DbType="NVarChar(13)")]
+		public string Empleado_id
+		{
+			get
+			{
+				return this._Empleado_id;
+			}
+			set
+			{
+				if ((this._Empleado_id != value))
+				{
+					this._Empleado_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtotal", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Subtotal
+		{
+			get
+			{
+				return this._Subtotal;
+			}
+			set
+			{
+				if ((this._Subtotal != value))
+				{
+					this._Subtotal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Iva", DbType="Decimal(3,0)")]
+		public System.Nullable<decimal> Iva
+		{
+			get
+			{
+				return this._Iva;
+			}
+			set
+			{
+				if ((this._Iva != value))
+				{
+					this._Iva = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Anulado", DbType="Bit")]
+		public System.Nullable<bool> Anulado
+		{
+			get
+			{
+				return this._Anulado;
+			}
+			set
+			{
+				if ((this._Anulado != value))
+				{
+					this._Anulado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NombreCliente", DbType="NVarChar(50)")]
+		public string NombreCliente
+		{
+			get
+			{
+				return this._NombreCliente;
+			}
+			set
+			{
+				if ((this._NombreCliente != value))
+				{
+					this._NombreCliente = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoCliente", DbType="NVarChar(50)")]
+		public string ApellidoCliente
+		{
+			get
+			{
+				return this._ApellidoCliente;
+			}
+			set
+			{
+				if ((this._ApellidoCliente != value))
+				{
+					this._ApellidoCliente = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NombreEmpleado", DbType="NVarChar(50)")]
+		public string NombreEmpleado
+		{
+			get
+			{
+				return this._NombreEmpleado;
+			}
+			set
+			{
+				if ((this._NombreEmpleado != value))
+				{
+					this._NombreEmpleado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoEmpleado", DbType="NVarChar(50)")]
+		public string ApellidoEmpleado
+		{
+			get
+			{
+				return this._ApellidoEmpleado;
+			}
+			set
+			{
+				if ((this._ApellidoEmpleado != value))
+				{
+					this._ApellidoEmpleado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Telefono", DbType="NVarChar(10)")]
+		public string Telefono
+		{
+			get
+			{
+				return this._Telefono;
+			}
+			set
+			{
+				if ((this._Telefono != value))
+				{
+					this._Telefono = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Direccion", DbType="NVarChar(50)")]
+		public string Direccion
+		{
+			get
+			{
+				return this._Direccion;
+			}
+			set
+			{
+				if ((this._Direccion != value))
+				{
+					this._Direccion = value;
+				}
 			}
 		}
 	}
